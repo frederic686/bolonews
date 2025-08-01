@@ -40,4 +40,23 @@ class ArticleRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    public function searchByUser($user, $query = null, $categorie = null, $publie = null, bool $isPublished = true)
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->leftJoin('a.categorie', 'c')
+            ->addSelect('c')
+            ->andWhere('a.auteur = :user')
+            ->setParameter('user', $user)
+            ->andWhere('a.publie = :publie')
+            ->setParameter('publie', $isPublished)
+            ->orderBy('a.dateCreation', 'DESC');
+
+        if ($query) {
+            $qb->andWhere('a.titre LIKE :q OR a.chapeau LIKE :q')
+            ->setParameter('q', '%' . $query . '%');
+        }
+        return $qb->getQuery()->getResult();
+    }
+
 }

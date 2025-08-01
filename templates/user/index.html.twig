@@ -1,20 +1,79 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserController!{% endblock %}
+{% block title %}Créer un article{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<div class="example-wrapper">
+    <h1>Créer un article</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.titre) }}
+        {{ form_row(form.chapeau) }}
+        {{ form_row(form.contenu) }}
+        {{ form_row(form.image) }}
+        {{ form_row(form.categorie) }}
+        {{ form_row(form.publie) }}
+        <button class="btn btn-primary">Enregistrer</button>
+    {{ form_end(form) }}
+</div>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h2>Articles publiés</h2>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/frede/Desktop/fredy/court web dev/framework/bolonews/src/Controller/UserController.php</code></li>
-        <li>Your template at <code>C:/Users/frede/Desktop/fredy/court web dev/framework/bolonews/templates/user/index.html.twig</code></li>
-    </ul>
+    {% if articles is empty %}
+        <p>Aucun article publié.</p>
+    {% else %}
+        {% for article in articles %}
+            <div class="article-card">
+                <h3>{{ article.titre }}</h3>
+                <p><strong>Catégorie :</strong> {{ article.categorie.libelle }}</p>
+                <p><em>{{ article.chapeau }}</em></p>
+                <div>{{ article.contenu|nl2br }}</div>
+
+                {% if article.image %}
+                    <div style="margin: 1em 0;">
+                        <img src="{{ asset('uploads/images/' ~ article.image) }}" alt="illustration" style="max-width:100%; height:auto;">
+                    </div>
+                {% endif %}
+
+                <p>🕒 Créé le {{ article.dateCreation|date('d/m/Y H:i') }}</p>
+                <p>✏️ Modifié le {{ article.dateModification|date('d/m/Y H:i') }}</p>
+                <p>👤 Publié par {{ article.auteur.pseudo ?? 'Inconnu' }}</p>
+
+                <a href="{{ path('app_user', {'edit': article.id}) }}" class="btn btn-primary">Modifier</a>
+                <a href="{{ path('app_user', {'delete': article.id}) }}" class="btn btn-danger" onclick="return confirm('Confirmer la suppression ?')">Supprimer</a>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+<div class="example-wrapper">
+    <h2>Articles non publiés</h2>
+
+    {% if articlesNonPublies is empty %}
+        <p>Aucun article en brouillon.</p>
+    {% else %}
+        {% for article in articlesNonPublies %}
+            <div class="article-card">
+                <h3>{{ article.titre }}</h3>
+                <p><strong>Catégorie :</strong> {{ article.categorie.libelle }}</p>
+                <p><em>{{ article.chapeau }}</em></p>
+                <div>{{ article.contenu|nl2br }}</div>
+
+                {% if article.image %}
+                    <div style="margin: 1em 0;">
+                        <img src="{{ asset('uploads/images/' ~ article.image) }}" alt="illustration" style="max-width:100%; height:auto;">
+                    </div>
+                {% endif %}
+
+                <p>🕒 Créé le {{ article.dateCreation|date('d/m/Y H:i') }}</p>
+                <p>✏️ Modifié le {{ article.dateModification|date('d/m/Y H:i') }}</p>
+                <p>👤 Auteur : {{ article.auteur.pseudo ?? 'Inconnu' }}</p>
+
+                <a href="{{ path('app_user', {'edit': article.id}) }}" class="btn btn-primary">Modifier</a>
+                <a href="{{ path('app_user', {'delete': article.id}) }}" class="btn btn-danger" onclick="return confirm('Confirmer la suppression ?')">Supprimer</a>
+            </div>
+        {% endfor %}
+    {% endif %}
 </div>
 {% endblock %}

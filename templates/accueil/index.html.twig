@@ -1,20 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AccueilController!{% endblock %}
+{% block title %}Accueil Bolonews{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>Derniers articles publiés</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/frede/Desktop/fredy/court web dev/framework/bolonews/src/Controller/AccueilController.php</code></li>
-        <li>Your template at <code>C:/Users/frede/Desktop/fredy/court web dev/framework/bolonews/templates/accueil/index.html.twig</code></li>
-    </ul>
+    {% if articles is empty %}
+        <p>Aucun article publié pour le moment.</p>
+    {% else %}
+        {% for article in articles %}
+            <div class="article-card">
+                <h3>{{ article.titre }}</h3>
+                <p><strong>Catégorie :</strong> {{ article.categorie.libelle }}</p>
+                <p><em>{{ article.chapeau }}</em></p>
+                <div>{{ article.contenu|nl2br }}</div>
+
+                {% if article.image %}
+                    <div style="margin: 1em 0;">
+                        <img src="{{ asset('uploads/images/' ~ article.image) }}" alt="illustration" style="max-width:100%; height:auto;">
+                    </div>
+                {% endif %}
+
+                <p>🕒 Publié le {{ article.dateCreation|date('d/m/Y H:i') }}</p>
+                <p>👤 Auteur : {{ article.auteur.pseudo ?? 'Inconnu' }}</p>
+            </div>
+        {% endfor %}
+    {% endif %}
 </div>
 {% endblock %}

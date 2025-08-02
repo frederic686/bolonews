@@ -3,8 +3,9 @@
 {% block title %}Accueil Bolonews{% endblock %}
 
 {% block body %}
+   <h1>Bolonews</h1>
 <div class="example-wrapper">
-    <h1>Bolonews</h1>
+ 
 
     {% if articles is empty %}
         <p>Aucun article publié pour le moment.</p>
@@ -17,8 +18,8 @@
                 <div>{{ article.contenu|nl2br }}</div>
 
                 {% if article.image %}
-                    <div style="margin: 1em 0;">
-                        <img src="{{ asset('uploadimage/' ~ article.image) }}" alt="illustration" style="max-width:100%; height:auto;">
+                    <div class="image">
+                        <img src="{{ asset('uploadimage/' ~ article.image) }}" alt="illustration">
                     </div>
                 {% endif %}
 

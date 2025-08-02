@@ -29,7 +29,7 @@ class ArticleType extends AbstractType
                 'constraints' => [
                     new File([
                         'maxSize' => '2M',
-                        'mimeTypes' => ['image/jpeg', 'image/png'],
+                        'mimeTypes' => ['image/jpeg', 'image/png','image/webp'],
                         'mimeTypesMessage' => 'Format JPG ou PNG uniquement.',
                     ])
                 ]

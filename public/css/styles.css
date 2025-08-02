@@ -48,3 +48,13 @@
     align-content: center;
     justify-content: space-between;
 }
+/*
+.resulat-recherche {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    height: auto !important;
+    border: 2px dashed red;
+    padding: 10rem;
+}
+*/

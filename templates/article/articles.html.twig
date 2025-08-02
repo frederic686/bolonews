@@ -7,34 +7,42 @@
     <h1>Bolonews</h1>
 
     <div class="search">
-
-    <h2>recherche</h2>
+        <h2>Recherche</h2>
+        {{ form_start(searchForm, { method: 'get', action: path('app_article') }) }}
+            {{ form_row(searchForm.query) }}
+            <button type="submit" class="btn btn-primary">🔍 Rechercher</button>
+        {{ form_end(searchForm) }}
     </div>
 
     <div class="barre-categorie">
-
+        {# future catégorie éventuellement #}
     </div>
-    <h2>resultat de votre recherche</h2>
-    {% if articles is empty %}
-        <p>Aucun article publié pour le moment.</p>
-    {% else %}
-        {% for article in articles %}
-            <div class="article-card">
-                <h3>{{ article.titre }}</h3>
-                <p><strong>Catégorie :</strong> {{ article.categorie.libelle }}</p>
-                <p><em>{{ article.chapeau }}</em></p>
-                <div>{{ article.contenu|nl2br }}</div>
 
-                {% if article.image %}
-                    <div style="margin: 1em 0;">
-                        <img src="{{ asset('uploads/images/' ~ article.image) }}" alt="illustration" style="max-width:100%; height:auto;">
+    {% if articles is not null %}
+        <h2>Résultat de votre recherche</h2>
+        <div class="resulat-recherche">
+            {% if articles is empty %}
+                <p>Aucun article publié ne correspond à votre recherche.</p>
+            {% else %}
+                {% for article in articles %}
+                    <div class="article-card">
+                        <h3>{{ article.titre }}</h3>
+                        <p><strong>Catégorie :</strong> {{ article.categorie.libelle }}</p>
+                        <p><em>{{ article.chapeau }}</em></p>
+                        <div>{{ article.contenu|nl2br }}</div>
+
+                        {% if article.image %}
+                            <div style="margin: 1em 0;">
+                                <img src="{{ asset('uploadimage/' ~ article.image) }}" alt="illustration" style="max-width:100%; height:auto;">
+                            </div>
+                        {% endif %}
+
+                        <p>🕒 Publié le {{ article.dateCreation|date('d/m/Y H:i') }}</p>
+                        <p>👤 Auteur : {{ article.auteur.pseudo ?? 'Inconnu' }}</p>
                     </div>
-                {% endif %}
-
-                <p>🕒 Publié le {{ article.dateCreation|date('d/m/Y H:i') }}</p>
-                <p>👤 Auteur : {{ article.auteur.pseudo ?? 'Inconnu' }}</p>
-            </div>
-        {% endfor %}
+                {% endfor %}
+            {% endif %}
+        </div>
     {% endif %}
 </div>
 {% endblock %}

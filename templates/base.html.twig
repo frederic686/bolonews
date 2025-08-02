@@ -21,15 +21,14 @@
                 <ul class="nav-links">
                     <li><a href="{{ path('app_accueil') }}">Home</a></li>
                     <li><a href="{{ path('app_article') }}">Articles</a></li>
+                    <li><a href="{{ path('app_article') }}">Contact</a></li>
                 </ul>
 
                 <ul class="auth-links">
                     {% if app.user %}
-                        <li><span>👤 {{ app.user.pseudo }}</span></li>
-                        <li><a href="{{ path('app_accueil') }}">Accueil</a></li>
-                        <li><a href="{{ path('app_article') }}">Se déconnecter</a></li>
-                        <li><a href="{{ path('app_article2') }}">Article 2</a></li>
-                        <li><a href="{{ path('app_logout') }}">se decoonecter</a></li>
+                        <li><a href="{{ path('app_user') }}"><span>👤 {{ app.user.pseudo }}</span></a></li>
+                        <li><a href="{{ path('app_article2') }}">detail de l'articles</a></li>
+                        <li><a href="{{ path('app_logout') }}">se deconnecter</a></li>
                     {% elseif current_route in ['app_accueil', 'app_article'] %}
                         <li><a href="{{ path('app_login') }}">Se connecter</a></li>
                         <li><a href="{{ path('app_register') }}">M’inscrire</a></li>

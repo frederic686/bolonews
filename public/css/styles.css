@@ -32,6 +32,14 @@
     border-radius: 4px;
     cursor: pointer;
 }
+.btn-delete {
+    padding: 8px 16px;
+    background-color: #e71414;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
 .article-card {
      background-color: #fff;
     border: 1px solid #ddd;

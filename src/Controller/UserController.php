@@ -63,14 +63,21 @@ final class UserController extends AbstractController
             return $this->redirectToRoute('app_user');
         }
 
-        // ----- Suppression -----
-        if ($request->query->get('delete')) {
-            $deleteId = (int) $request->query->get('delete');
-            $toDelete = $entityManager->getRepository(Article::class)->findOneBy(['id' => $deleteId, 'auteur' => $user]);
-            if ($toDelete) {
-                $entityManager->remove($toDelete);
-                $entityManager->flush();
-                return $this->redirectToRoute('app_user');
+        // ----- Suppression sécurisée en POST -----
+        if ($request->isMethod('POST') && $request->request->get('delete_id')) {
+            $deleteId = (int) $request->request->get('delete_id');
+            $token = $request->request->get('_token');
+
+            if ($this->isCsrfTokenValid('delete' . $deleteId, $token)) {
+                $toDelete = $entityManager->getRepository(Article::class)
+                    ->findOneBy(['id' => $deleteId, 'auteur' => $user]);
+
+                if ($toDelete) {
+                    $entityManager->remove($toDelete);
+                    $entityManager->flush();
+                    $this->addFlash('success', 'Article supprimé avec succès.');
+                    return $this->redirectToRoute('app_user');
+                }
             }
         }
 

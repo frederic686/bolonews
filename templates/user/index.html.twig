@@ -41,7 +41,12 @@
                 <p>👤 Publié par {{ article.auteur.pseudo ?? 'Inconnu' }}</p>
 
                 <a href="{{ path('app_user', {'edit': article.id}) }}" class="btn btn-primary">Modifier</a>
-                <a href="{{ path('app_user', {'delete': article.id}) }}" class="btn btn-danger" onclick="return confirm('Confirmer la suppression ?')">Supprimer</a>
+
+                <form method="post" action="{{ path('app_user') }}" style="display:inline;" onsubmit="return confirm('Confirmer la suppression ?')">
+                    <input type="hidden" name="delete_id" value="{{ article.id }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ article.id) }}">
+                    <button class="btn btn-delete">Supprimer</button>
+                </form>
             </div>
         {% endfor %}
     {% endif %}
@@ -71,7 +76,12 @@
                 <p>👤 Auteur : {{ article.auteur.pseudo ?? 'Inconnu' }}</p>
 
                 <a href="{{ path('app_user', {'edit': article.id}) }}" class="btn btn-primary">Modifier</a>
-                <a href="{{ path('app_user', {'delete': article.id}) }}" class="btn btn-danger" onclick="return confirm('Confirmer la suppression ?')">Supprimer</a>
+
+                <form method="post" action="{{ path('app_user') }}" style="display:inline;" onsubmit="return confirm('Confirmer la suppression ?')">
+                    <input type="hidden" name="delete_id" value="{{ article.id }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ article.id) }}">
+                    <button class="btn btn-delete">Supprimer</button>
+                </form>
             </div>
         {% endfor %}
     {% endif %}

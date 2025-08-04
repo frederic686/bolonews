@@ -13,17 +13,19 @@ class Commentaire
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: 'text')]
     private ?string $contenu = null;
 
-    #[ORM\Column]
-    private ?\DateTime $date_publication = null;
+    #[ORM\Column(type: 'datetime')]
+    private ?\DateTimeInterface $datePublication = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $auteur = null;
+    #[ORM\ManyToOne(inversedBy: 'commentaires')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $auteur = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $article = null;
+    #[ORM\ManyToOne(inversedBy: 'commentaires')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Article $article = null;
 
     public function getId(): ?int
     {
@@ -42,36 +44,36 @@ class Commentaire
         return $this;
     }
 
-    public function getDatePublication(): ?\DateTime
+    public function getDatePublication(): ?\DateTimeInterface
     {
-        return $this->date_publication;
+        return $this->datePublication;
     }
 
-    public function setDatePublication(\DateTime $date_publication): static
+    public function setDatePublication(\DateTimeInterface $datePublication): static
     {
-        $this->date_publication = $date_publication;
+        $this->datePublication = $datePublication;
 
         return $this;
     }
 
-    public function getAuteur(): ?string
+    public function getAuteur(): ?User
     {
         return $this->auteur;
     }
 
-    public function setAuteur(string $auteur): static
+    public function setAuteur(?User $auteur): static
     {
         $this->auteur = $auteur;
 
         return $this;
     }
 
-    public function getArticle(): ?string
+    public function getArticle(): ?Article
     {
         return $this->article;
     }
 
-    public function setArticle(string $article): static
+    public function setArticle(?Article $article): static
     {
         $this->article = $article;
 

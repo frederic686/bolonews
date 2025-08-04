@@ -16,10 +16,38 @@
                 <img src="{{ asset('uploadimage/' ~ article.image) }}" alt="illustration">
             </div>
         {% endif %}
+
         <div>{{ article.contenu|nl2br }}</div>
 
         <p>🕒 Publié le {{ article.dateCreation|date('d/m/Y H:i') }}</p>
         <p>👤 Auteur : {{ article.auteur.pseudo ?? 'Inconnu' }}</p>
+
+        <hr>
+
+        <div class="commentaire">
+            <h2>🗨️ Commentaires</h2>
+
+            {% for commentaire in commentaires %}
+                <div class="commentaire-item" style="margin-bottom: 1rem; padding: 0.5rem; border-bottom: 1px solid #ccc;">
+                    <p>{{ commentaire.contenu|nl2br }}</p>
+                    <small>🕒 {{ commentaire.datePublication|date('d/m/Y H:i') }} — 👤 {{ commentaire.auteur.pseudo }}</small>
+                </div>
+            {% else %}
+                <p>Aucun commentaire pour cet article.</p>
+            {% endfor %}
+
+            {% if app.user %}
+                <h3>💬 Ajouter un commentaire</h3>
+                {{ form_start(commentForm) }}
+                    {{ form_row(commentForm.contenu) }}
+                    <button class="btn btn-primary">Envoyer</button>
+                {{ form_end(commentForm) }}
+            {% else %}
+                <p><a href="{{ path('app_login') }}">Connectez-vous</a> pour commenter.</p>
+            {% endif %}
+        </div>
+
+        <br>
         <a href="{{ path('app_accueil') }}">⬅ Retour à l'accueil</a>
     </div>
 </div>

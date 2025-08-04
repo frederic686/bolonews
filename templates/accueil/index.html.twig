@@ -15,7 +15,7 @@
                 <h3>{{ article.titre }}</h3>
                 <p><strong>Catégorie :</strong> {{ article.categorie.libelle }}</p>
                 <p><em>{{ article.chapeau }}</em></p>
-                <div>{{ article.contenu|nl2br }}</div>
+                
 
                 {% if article.image %}
                     <div class="image">
@@ -25,6 +25,7 @@
 
                 <p>🕒 Publié le {{ article.dateCreation|date('d/m/Y H:i') }}</p>
                 <p>👤 Auteur : {{ article.auteur.pseudo ?? 'Inconnu' }}</p>
+                <a href="{{ path('app_article2', { id: article.id }) }}">lire la suite</a>
             </div>
         {% endfor %}
     {% endif %}

@@ -24,7 +24,7 @@ class Article
     #[ORM\Column]
     private ?string $chapeau = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'text')]
     private ?string $contenu = null;
 
     #[ORM\Column(length: 255, nullable: true)]

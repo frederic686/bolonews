@@ -18,7 +18,9 @@
 </div>
 
 <div class="example-wrapper">
-    <h2>Articles publiés</h2>
+        <div class="Articlepublie">
+        <h2>Articles publiés</h2>
+    </div>
 
     {% if articles is empty %}
         <p>Aucun article publié.</p>
@@ -53,7 +55,10 @@
 </div>
 
 <div class="example-wrapper">
-    <h2>Articles non publiés</h2>
+    <div class="Articlepublie">
+        <h2>Articles non publiés</h2>
+    </div>
+    
 
     {% if articlesNonPublies is empty %}
         <p>Aucun article en brouillon.</p>
@@ -67,7 +72,7 @@
 
                 {% if article.image %}
                     <div style="margin: 1em 0;">
-                        <img src="{{ asset('uploads/images/' ~ article.image) }}" alt="illustration" style="max-width:100%; height:auto;">
+                        <img src="{{ asset('uploadimage/' ~ article.image) }}" alt="illustration" style="max-width:100%; height:auto;">
                     </div>
                 {% endif %}
 

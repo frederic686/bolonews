@@ -19,7 +19,7 @@
     width: 95%;
     font: 18px / 1.5 sans-serif;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
     align-content: center;
